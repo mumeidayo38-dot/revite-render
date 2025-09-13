@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: revite
+    env: static
+    buildCommand: yarn && yarn build:deps && yarn build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: '--max-old-space-size=4096'
