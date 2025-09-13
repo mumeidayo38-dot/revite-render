@@ -10,6 +10,11 @@ import preact from "@preact/preset-vite";
 
 function getGitRevision() {
     try {
+        // Try to get from environment variable first (Render provides this)
+        if (process.env.RENDER_GIT_COMMIT) {
+            return process.env.RENDER_GIT_COMMIT.slice(0, 7);
+        }
+        
         const rev = readFileSync(".git/HEAD").toString().trim();
         if (rev.indexOf(":") === -1) {
             return rev;
@@ -20,12 +25,17 @@ function getGitRevision() {
             .trim();
     } catch (err) {
         console.error("Failed to get Git revision.");
-        return "?";
+        return "unknown";
     }
 }
 
 function getGitBranch() {
     try {
+        // Try to get from environment variable first (Render provides this)
+        if (process.env.RENDER_GIT_BRANCH) {
+            return process.env.RENDER_GIT_BRANCH;
+        }
+        
         const rev = readFileSync(".git/HEAD").toString().trim();
         if (rev.indexOf(":") === -1) {
             return "DETACHED";
@@ -34,7 +44,7 @@ function getGitBranch() {
         return rev.split("/").pop();
     } catch (err) {
         console.error("Failed to get Git branch.");
-        return "?";
+        return "main";
     }
 }
 
