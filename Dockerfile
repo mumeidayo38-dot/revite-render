@@ -16,8 +16,8 @@ WORKDIR /usr/src/app
 COPY docker/package.json docker/yarn.lock .
 RUN yarn install --frozen-lockfile
 COPY --from=builder --exclude=package.json --exclude=yarn.lock --exclude=.yarn* --exclude=.git --exclude=external --exclude=node_modules /usr/src/app .
-
-EXPOSE 5000
 COPY start.sh .
 RUN chmod +x start.sh
+
+EXPOSE 5000
 CMD [ "./start.sh" ]
