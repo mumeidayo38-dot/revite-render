@@ -1,11 +1,12 @@
 services:
   - type: web
     name: revite
-    env: static
-    buildCommand: yarn && yarn build:deps && yarn build
-    staticPublishPath: ./dist
+    env: docker
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: NODE_ENV
         value: production
-      - key: NODE_OPTIONS
-        value: '--max-old-space-size=4096'
+      - key: REVOLT_PUBLIC_URL
+        value: https://api.revolt.chat/
+      - key: PORT
+        value: 5000
